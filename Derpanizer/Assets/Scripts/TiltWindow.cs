@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class TiltWindow : MonoBehaviour
 {
-	public Vector2 range = new Vector2(5f, 3f);
+	public Vector2 Range = new Vector2(5f, 3f);
 
-	Transform mTrans;
-	Quaternion mStart;
-	Vector2 mRot = Vector2.zero;
+	Transform _mTrans;
+	Quaternion _mStart;
+	Vector2 _mRot = Vector2.zero;
 
 	void Start ()
 	{
-		mTrans = transform;
-		mStart = mTrans.localRotation;
+		_mTrans = transform;
+		_mStart = _mTrans.localRotation;
 	}
 
 	void Update ()
@@ -22,8 +22,8 @@ public class TiltWindow : MonoBehaviour
 		float halfHeight = Screen.height * 0.5f;
 		float x = Mathf.Clamp((pos.x - halfWidth) / halfWidth, -1f, 1f);
 		float y = Mathf.Clamp((pos.y - halfHeight) / halfHeight, -1f, 1f);
-		mRot = Vector2.Lerp(mRot, new Vector2(x, y), Time.deltaTime * 5f);
+		_mRot = Vector2.Lerp(_mRot, new Vector2(x, y), Time.deltaTime * 5f);
 
-		mTrans.localRotation = mStart * Quaternion.Euler(-mRot.y * range.y, mRot.x * range.x, 0f);
+		_mTrans.localRotation = _mStart * Quaternion.Euler(-_mRot.y * Range.y, _mRot.x * Range.x, 0f);
 	}
 }

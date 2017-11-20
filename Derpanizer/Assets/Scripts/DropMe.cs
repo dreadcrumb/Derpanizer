@@ -1,49 +1,48 @@
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-	public Image containerImage;
-	public Image receivingImage;
-	private Color normalColor;
-	public Color highlightColor = Color.yellow;
+	public Image ContainerImage;
+	public Image ReceivingImage;
+	private Color _normalColor;
+	public Color HighlightColor = Color.yellow;
 	
 	public void OnEnable ()
 	{
-		if (containerImage != null)
-			normalColor = containerImage.color;
+		if (ContainerImage != null)
+			_normalColor = ContainerImage.color;
 	}
 	
 	public void OnDrop(PointerEventData data)
 	{
-		containerImage.color = normalColor;
+		ContainerImage.color = _normalColor;
 		
-		if (receivingImage == null)
+		if (ReceivingImage == null)
 			return;
 		
 		Sprite dropSprite = GetDropSprite (data);
 		if (dropSprite != null)
-			receivingImage.overrideSprite = dropSprite;
+			ReceivingImage.overrideSprite = dropSprite;
 	}
 
 	public void OnPointerEnter(PointerEventData data)
 	{
-		if (containerImage == null)
+		if (ContainerImage == null)
 			return;
 		
 		Sprite dropSprite = GetDropSprite (data);
 		if (dropSprite != null)
-			containerImage.color = highlightColor;
+			ContainerImage.color = HighlightColor;
 	}
 
 	public void OnPointerExit(PointerEventData data)
 	{
-		if (containerImage == null)
+		if (ContainerImage == null)
 			return;
 		
-		containerImage.color = normalColor;
+		ContainerImage.color = _normalColor;
 	}
 	
 	private Sprite GetDropSprite(PointerEventData data)

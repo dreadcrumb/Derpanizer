@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class OpenFolderPanel : MonoBehaviour
+namespace Assets.Scripts
 {
-
-    public void SelectDirectory()
+    public class OpenFolderPanel : MonoBehaviour
     {
-        InputField inputField = GameObject.Find("FilePathInput").GetComponent<InputField>();
-        //Text text = InputField.GetComponent<Text>();
-        if (inputField != null)
+
+        public void SelectDirectory()
         {
-            inputField.text = OpenFolderEditorWindow.Apply();
+            InputField inputField = GameObject.Find("FilePathInput").GetComponent<InputField>();
+            //Text text = InputField.GetComponent<Text>();
+            if (inputField != null)
+            {
+                inputField.text = OpenFolderEditorWindow.Apply();
+            }
         }
     }
 }

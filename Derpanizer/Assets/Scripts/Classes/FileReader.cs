@@ -1,18 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
+using Assets.Scripts.ObjectManager;
 
-public static class FileReader
+namespace Assets.Scripts.Classes
 {
-
-    public static FileTree ReadFileTree(string path)
+    public class FileReader
     {
-        var directoryInfo = new DirectoryInfo(path);
-        if (!directoryInfo.Exists)
+
+        public string Path;
+        public DirectoryInfo DirectoryInfo;
+
+        public FileReader(string path)
         {
-            return null;
+            Path = path;
+            ReadFirstLayer();
         }
-        return new FileTree();
+
+        public void ReadFirstLayer()
+        {
+            if (string.IsNullOrEmpty(Path))
+            {
+                // TODO : Error handling
+                return;
+            }
+            DirectoryInfo = new DirectoryInfo(Path);
+            var directories = DirectoryInfo.GetDirectories();
+            var fileInfo = DirectoryInfo.GetFiles();
+            foreach (var file in fileInfo)
+            {
+                switch (file.Extension)
+                {
+                    case "txt":
+                        break;
+                }
+            }
+
+        }
+
+
     }
 }

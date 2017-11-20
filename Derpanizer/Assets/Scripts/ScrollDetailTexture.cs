@@ -5,46 +5,46 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ScrollDetailTexture : MonoBehaviour
 {
-	public bool uniqueMaterial = false;
-	public Vector2 scrollPerSecond = Vector2.zero;
+	public bool UniqueMaterial = false;
+	public Vector2 ScrollPerSecond = Vector2.zero;
 
-	Matrix4x4 m_Matrix;
-	Material mCopy;
-	Material mOriginal;
-	Image mSprite;
-	Material m_Mat;
+	Matrix4x4 _mMatrix;
+	Material _mCopy;
+	Material _mOriginal;
+	Image _mSprite;
+	Material _mMat;
 
 	void OnEnable ()
 	{
-		mSprite = GetComponent<Image>();
-		mOriginal = mSprite.material;
+		_mSprite = GetComponent<Image>();
+		_mOriginal = _mSprite.material;
 
-		if (uniqueMaterial && mSprite.material != null)
+		if (UniqueMaterial && _mSprite.material != null)
 		{
-			mCopy = new Material(mOriginal);
-			mCopy.name = "Copy of " + mOriginal.name;
-			mCopy.hideFlags = HideFlags.DontSave;
-			mSprite.material = mCopy;
+			_mCopy = new Material(_mOriginal);
+			_mCopy.name = "Copy of " + _mOriginal.name;
+			_mCopy.hideFlags = HideFlags.DontSave;
+			_mSprite.material = _mCopy;
 		}
 	}
 
 	void OnDisable ()
 	{
-		if (mCopy != null)
+		if (_mCopy != null)
 		{
-			mSprite.material = mOriginal;
+			_mSprite.material = _mOriginal;
 			if (Application.isEditor)
-				UnityEngine.Object.DestroyImmediate(mCopy);
+				UnityEngine.Object.DestroyImmediate(_mCopy);
 			else
-				UnityEngine.Object.Destroy(mCopy);
-			mCopy = null;
+				UnityEngine.Object.Destroy(_mCopy);
+			_mCopy = null;
 		}
-		mOriginal = null;
+		_mOriginal = null;
 	}
 
 	void Update ()
 	{
-		Material mat = (mCopy != null) ? mCopy : mOriginal;
+		Material mat = (_mCopy != null) ? _mCopy : _mOriginal;
 
 		if (mat != null)
 		{
@@ -52,7 +52,7 @@ public class ScrollDetailTexture : MonoBehaviour
 
 			if (tex != null)
 			{
-				mat.SetTextureOffset("_DetailTex", scrollPerSecond * Time.time);
+				mat.SetTextureOffset("_DetailTex", ScrollPerSecond * Time.time);
 
 				// TODO: It would be better to add support for MaterialBlocks on UIRenderer,
 				// because currently only one Update() function's matrix can be active at a time.

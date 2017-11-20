@@ -2,32 +2,31 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
-using System.Collections.Generic;
 
 public class PanelManager : MonoBehaviour {
 
-	public Animator initiallyOpen;
+	public Animator InitiallyOpen;
 
-	private int m_OpenParameterId;
-	private Animator m_Open;
-	private GameObject m_PreviouslySelected;
+	private int _mOpenParameterId;
+	private Animator _mOpen;
+	private GameObject _mPreviouslySelected;
 
-	const string k_OpenTransitionName = "Open";
-	const string k_ClosedStateName = "Closed";
+	const string KOpenTransitionName = "Open";
+	const string KClosedStateName = "Closed";
 
 	public void OnEnable()
 	{
-		m_OpenParameterId = Animator.StringToHash (k_OpenTransitionName);
+		_mOpenParameterId = Animator.StringToHash (KOpenTransitionName);
 
-		if (initiallyOpen == null)
+		if (InitiallyOpen == null)
 			return;
 
-		OpenPanel(initiallyOpen);
+		OpenPanel(InitiallyOpen);
 	}
 
 	public void OpenPanel (Animator anim)
 	{
-		if (m_Open == anim)
+		if (_mOpen == anim)
 			return;
 
 		anim.gameObject.SetActive(true);
@@ -37,10 +36,10 @@ public class PanelManager : MonoBehaviour {
 
 		CloseCurrent();
 
-		m_PreviouslySelected = newPreviouslySelected;
+		_mPreviouslySelected = newPreviouslySelected;
 
-		m_Open = anim;
-		m_Open.SetBool(m_OpenParameterId, true);
+		_mOpen = anim;
+		_mOpen.SetBool(_mOpenParameterId, true);
 
 		GameObject go = FindFirstEnabledSelectable(anim.gameObject);
 
@@ -62,13 +61,13 @@ public class PanelManager : MonoBehaviour {
 
 	public void CloseCurrent()
 	{
-		if (m_Open == null)
+		if (_mOpen == null)
 			return;
 
-		m_Open.SetBool(m_OpenParameterId, false);
-		SetSelected(m_PreviouslySelected);
-		StartCoroutine(DisablePanelDeleyed(m_Open));
-		m_Open = null;
+		_mOpen.SetBool(_mOpenParameterId, false);
+		SetSelected(_mPreviouslySelected);
+		StartCoroutine(DisablePanelDeleyed(_mOpen));
+		_mOpen = null;
 	}
 
 	IEnumerator DisablePanelDeleyed(Animator anim)
@@ -78,9 +77,9 @@ public class PanelManager : MonoBehaviour {
 		while (!closedStateReached && wantToClose)
 		{
 			if (!anim.IsInTransition(0))
-				closedStateReached = anim.GetCurrentAnimatorStateInfo(0).IsName(k_ClosedStateName);
+				closedStateReached = anim.GetCurrentAnimatorStateInfo(0).IsName(KClosedStateName);
 
-			wantToClose = !anim.GetBool(m_OpenParameterId);
+			wantToClose = !anim.GetBool(_mOpenParameterId);
 
 			yield return new WaitForEndOfFrame();
 		}
