@@ -16,19 +16,21 @@ public class FileManager : MonoBehaviour
         var table = GameObject.Find("table");
         _defaultLocation = table.transform.position;
         _defaultLocation.y += table.GetComponent<Renderer>().bounds.size.y + 5;
+
+
     }
 
-    public void ReadFirstLayer()
+    public DirectoryInfo[] ReadFirstLayer()
     {
         var fileInfo = _reader.GetRootFileInfo();
         InstantiateFiles(fileInfo);
-
-        var directoryInfo = _reader.GetRootDirectoryInfo();
+        var directoryInfo = _reader.GetAllDirectories();
         foreach (var info in directoryInfo)
         {
             var files = info.GetFiles();
             InstantiateFiles(files);
         }
+        return directoryInfo;
     }
 
     private void InstantiateFiles(IEnumerable<FileInfo> infos)

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using FileManagerScripts;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -20,7 +22,10 @@ public class GameManager : MonoBehaviour
         {
             gameObject.AddComponent<FileManager>();
             gameObject.GetComponent<FileManager>().Init(inputField.text);
-            gameObject.GetComponent<FileManager>().ReadFirstLayer();
+            var directories = gameObject.GetComponent<FileManager>().ReadFirstLayer();
+            gameObject.AddComponent<CopyScript>();
+            gameObject.AddComponent<MoveScript>();
+            gameObject.GetComponent<MoveScript>().Init(directories);
 
             var menuItems = GameObject.FindGameObjectsWithTag("menu");
             foreach (var item in menuItems)

@@ -41,8 +41,13 @@ public class FileReader
 
     }
 
-    public DirectoryInfo[] GetRootDirectoryInfo()
+    public DirectoryInfo[] GetAllDirectories()
     {
         return DirectoryInfo.GetDirectories();
+    }
+
+    public DirectoryInfo GetRootDirectory()
+    {
+        return DirectoryInfo;
     }
 }
