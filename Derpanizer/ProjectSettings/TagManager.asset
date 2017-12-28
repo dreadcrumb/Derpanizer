@@ -6,6 +6,7 @@ TagManager:
   tags:
   - desk
   - menu
+  - container
   layers:
   - Default
   - TransparentFX
