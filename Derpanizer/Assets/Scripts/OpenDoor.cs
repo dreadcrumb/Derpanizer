@@ -22,9 +22,6 @@ public class OpenDoor : MonoBehaviour
         _doorClose = Quaternion.Euler(DoorClosedX, 0, DoorCloseAngle);
         //Find only one time your player and get him reference
         _playerTrans = GameObject.Find("Player").transform;
-
-        Collider c = GetComponent<Collider>();
-        c.isTrigger = true;
     }
 
     void OnMouseDown()
@@ -73,6 +70,7 @@ public class OpenDoor : MonoBehaviour
         {
             transform.localRotation =
                 Quaternion.Slerp(transform.localRotation, dest, Time.deltaTime * DoorAnimSpeed);
+
             //UPDATE 1: add yield
             yield return null;
         }

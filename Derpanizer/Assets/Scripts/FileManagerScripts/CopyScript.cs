@@ -2,24 +2,45 @@
 
 namespace FileManagerScripts
 {
-    public class CopyScript : MonoBehaviour {
+    public class CopyScript : MonoBehaviour
+    {
+
+        private bool _hasLeft = true;
+        private bool _isInside = true;
+
+        public Collider boxCollider;
 
         // Use this for initialization
-        void Start () {
-		
+        void Start()
+        {
+
         }
-	
+
         // Update is called once per frame
-        void Update () {
-		
+        void Update()
+        {
+
         }
 
         void OnCollisionEnter(Collision collision)
         {
-            if (!collision.gameObject.CompareTag("file"))
+            if (_hasLeft && _isInside/* && !collision.gameObject.tag.Contains("file")*/)
             {
-                Instantiate(collision.gameObject);
+                Instantiate(collision.gameObject, gameObject.transform);
+                _hasLeft = false;
+
             }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            _isInside = true;
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            _hasLeft = true;
+            _isInside = false;
         }
     }
 }

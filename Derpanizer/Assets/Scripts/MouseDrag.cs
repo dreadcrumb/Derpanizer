@@ -4,7 +4,7 @@ namespace Assets.Scripts
 {
     public class MouseDrag : MonoBehaviour
     {
-        private float distance = 10;
+        private float distance = 15;
 
         void OnMouseDrag()
         {

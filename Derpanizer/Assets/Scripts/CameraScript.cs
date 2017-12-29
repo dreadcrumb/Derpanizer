@@ -25,7 +25,8 @@ public class CameraScript : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                transform.Translate(0, Speed, 0);
+                transform.Translate(transform.up.x, transform.up.y * Speed, transform.up.z);
+                //transform.Translate(transform.up);
             }
 
 
