@@ -15,7 +15,7 @@ public class FileManager : MonoBehaviour
         _reader = new FileReader(path);
         var table = GameObject.Find("table");
         _defaultLocation = table.transform.position;
-        _defaultLocation.y += table.GetComponent<Renderer>().bounds.size.y + 5;
+        _defaultLocation.y += table.GetComponent<Renderer>().bounds.size.y + 0.01f;
 
 
     }

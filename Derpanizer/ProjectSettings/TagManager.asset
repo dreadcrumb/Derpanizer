@@ -8,6 +8,7 @@ TagManager:
   - menu
   - container
   - file
+  - door
   layers:
   - Default
   - TransparentFX
