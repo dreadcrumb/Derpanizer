@@ -1,7 +1,6 @@
-﻿using System.IO;
+﻿
 using FileManagerScripts;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class GameManager : MonoBehaviour
@@ -22,20 +21,19 @@ public class GameManager : MonoBehaviour
         //if (inputField != null)
         //{
         string text = "D:/Leander/FH_Hagenberg_IM/MA_3D/Derpanizer/Test";
-            gameObject.AddComponent<FileManager>();
-            gameObject.GetComponent<FileManager>().Init(/*inputField.*/text);
-            var directories = gameObject.GetComponent<FileManager>().ReadFirstLayer();
-            gameObject.AddComponent<CopyScript>();
-            gameObject.AddComponent<MoveScript>();
-            gameObject.GetComponent<MoveScript>().Init(directories);
+        gameObject.AddComponent<FileManager>();
+        gameObject.GetComponent<FileManager>().Init(/*inputField.*/text);
+        gameObject.GetComponent<FileManager>().ReadFirstLayer();
+        gameObject.AddComponent<CopyScript>();
 
-            var menuItems = GameObject.FindGameObjectsWithTag("menu");
-            foreach (var item in menuItems)
-            {
-                item.SetActive(false);
-            }
-            // make camera movement possible
-            _camera.GetComponent<FirstPersonController>().StartGame();
+        var menuItems = GameObject.FindGameObjectsWithTag("menu");
+        foreach (var item in menuItems)
+        {
+            item.SetActive(false);
+        }
+        // make camera movement possible
+        gameObject.AddComponent<FirstPersonController>();
+        gameObject.GetComponent<FirstPersonController>().StartGame();
         //}
         //else
         //{

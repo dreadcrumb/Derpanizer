@@ -1,53 +1,57 @@
 ﻿using System.IO;
 using UnityEngine;
 
-public class FileReader
+namespace FileManagerScripts
 {
-
-    public string Path;
-    public DirectoryInfo DirectoryInfo;
-    public Transform File;
-
-
-    public FileReader(string path)
+    public class FileReader
     {
-        Path = path;
-    }
 
-    public FileInfo[] GetRootFileInfo()
-    {
-        if (string.IsNullOrEmpty(Path))
+        public string Path;
+        public DirectoryInfo DirectoryInfo;
+        public Transform File;
+
+
+        public FileReader(string path)
         {
-            // TODO : Error handling
-            return new FileInfo[0];
+            Path = path;
+            DirectoryInfo = new DirectoryInfo(path);
         }
 
-        DirectoryInfo = new DirectoryInfo(Path);
-        return DirectoryInfo.GetFiles();
+        //public FileInfo[] GetFiles()
+        //{
+        //    if (string.IsNullOrEmpty(Path))
+        //    {
+        //        // TODO : Error handling
+        //        return new FileInfo[0];
+        //    }
 
-    }
+        //    DirectoryInfo = new DirectoryInfo(Path);
+        //    return DirectoryInfo.GetFiles();
 
-    public FileInfo[] GetFileInfo(string path)
-    {
-        if (string.IsNullOrEmpty(Path))
+        //}
+
+        public FileInfo[] GetFileInfo(string path)
         {
-            // TODO : Error handling
-            return new FileInfo[0];
+            if (string.IsNullOrEmpty(Path))
+            {
+                // TODO : Error handling
+                return new FileInfo[0];
+            }
+
+            
+            //DirectoryInfo.GetDirectories();
+            return DirectoryInfo.GetFiles();
+
         }
 
-        DirectoryInfo = new DirectoryInfo(Path + path);
-        //DirectoryInfo.GetDirectories();
-        return DirectoryInfo.GetFiles();
+        public DirectoryInfo[] GetAllDirectories()
+        {
+            return DirectoryInfo.GetDirectories();
+        }
 
-    }
-
-    public DirectoryInfo[] GetAllDirectories()
-    {
-        return DirectoryInfo.GetDirectories();
-    }
-
-    public DirectoryInfo GetRootDirectory()
-    {
-        return DirectoryInfo;
+        public DirectoryInfo GetRootDirectory()
+        {
+            return DirectoryInfo;
+        }
     }
 }

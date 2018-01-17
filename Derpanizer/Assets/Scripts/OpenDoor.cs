@@ -21,7 +21,7 @@ public class OpenDoor : MonoBehaviour
         _doorOpen = Quaternion.Euler(DoorClosedX, 0, DoorOpenAngle);
         _doorClose = Quaternion.Euler(DoorClosedX, 0, DoorCloseAngle);
         //Find only one time your player and get him reference
-        _playerTrans = GameObject.Find("Player").transform;
+        _playerTrans = GameObject.Find("FPSController").transform;
     }
 
     void OnMouseDown()

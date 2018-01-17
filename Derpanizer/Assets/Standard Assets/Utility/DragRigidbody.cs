@@ -35,6 +35,7 @@ namespace UnityStandardAssets.Utility
             {
                 return;
             }
+            Debug.Log(hit.collider.name);
             // We need to hit a rigidbody that is not kinematic
             if (!hit.rigidbody || hit.rigidbody.isKinematic)
             {
