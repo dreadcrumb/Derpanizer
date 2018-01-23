@@ -1,114 +1,49 @@
 ﻿using System.IO;
-using FileManagerScripts;
 using UnityEditor;
 using UnityEngine;
 
-public class MoveScript : MonoBehaviour
+namespace FileManagerScripts
 {
-    public GameObject Parent;
-
-    private DirectoryInfo _infos;
-
-    public void Init(DirectoryInfo info)
+    public class MoveScript : MonoBehaviour
     {
-        _infos = info;
-    }
+        public GameObject Parent;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.gameObject.CompareTag("container"))
-        //{
-        //    //var fileInfo = other.gameObject.GetComponent<FileObject>();
-        //    //if (fileInfo != null)
-        //    //{
-        //    //    var folder = GetFolderInDirectories(gameObject.name);
-        //    //    if (!folder.Equals("null"))
-        //    //    {
-        //    //        FileUtil.MoveFileOrDirectory(fileInfo.Info.DirectoryName, folder);
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        var root = gameObject.GetComponentInParent<FileReader>().GetRootDirectory();
-        //    //        AssetDatabase.CreateFolder(root.ToString(), fileInfo.name);
-        //    //    }
-        //    //}
-        //    Debug.Log("file -> shelf");
-        //}
-        if (other.gameObject.CompareTag("file"))
+        private DirectoryInfo _infos;
+
+        public void Init(DirectoryInfo info)
         {
-            var fileInfo = other.gameObject.GetComponent<FileObject>();
-            if (fileInfo != null)
-            {
-                var folder = GetDirectory();
-                if (folder == null)
-                {
-                    var root = gameObject.GetComponentInParent<FileReader>().GetRootDirectory();
-                    AssetDatabase.CreateFolder(root.Name, fileInfo.name);
-                }
-                FileUtil.MoveFileOrDirectory(fileInfo.Info.Name, folder.Name);
+            _infos = info;
+        }
 
-                Debug.Log("shelf -> file");
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("file"))
+            {
+                var fileInfo = other.gameObject.GetComponent<FileObject>();
+                if (fileInfo != null)
+                {
+                    var folder = GetDirectory();
+                    if (folder == null)
+                    {
+                        var root = gameObject.GetComponentInParent<FileReader>().GetRootDirectory();
+                        AssetDatabase.CreateFolder(root.Name, fileInfo.name);
+                    }
+                    var source = fileInfo.Info.ToString();
+                    var destination = folder + Const.Const.SLASH + fileInfo.Info.Name;
+
+                    if (!source.Equals(destination))
+                    {
+                        FileUtil.MoveFileOrDirectory(source, destination);
+                        FileInfo info = new FileInfo(folder.ToString() + Const.Const.SLASH + fileInfo.Info.Name);
+                        fileInfo.Info = info;
+                    }
+                }
             }
         }
-    }
 
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!collision.gameObject.CompareTag("file"))
-    //    {
-    //        var fileInfo = collision.gameObject.GetComponent<FileObject>();
-    //        if (fileInfo != null)
-    //        {
-    //            var folder = GetFolderInDirectories(gameObject.name);
-    //            if (folder != null)
-    //            {
-    //                FileUtil.MoveFileOrDirectory(fileInfo.Info.Name, folder.Name);
-    //            }
-    //            else
-    //            {
-    //                var root = gameObject.GetComponentInParent<FileReader>().GetRootDirectory();
-    //                AssetDatabase.CreateFolder(root.ToString(), fileInfo.name);
-    //            }
-    //        }
-    //    }
-    //    else if (!collision.gameObject.CompareTag("container"))
-    //    {
-    //        var fileInfo = collision.gameObject.GetComponent<FileObject>();
-    //        if (fileInfo != null)
-    //        {
-    //            var folder = GetFolderInDirectories(gameObject.name);
-    //            if (!folder.Equals("null"))
-    //            {
-    //                FileUtil.MoveFileOrDirectory(fileInfo.Info.DirectoryName, folder);
-    //            }
-    //            else
-    //            {
-    //                var root = gameObject.GetComponentInParent<FileReader>().GetRootDirectory();
-    //                AssetDatabase.CreateFolder(root.ToString(), fileInfo.name);
-    //            }
-    //        }
-    //    }
-    //}
-
-    //private DirectoryInfo GetFolderInDirectories(string dName)
-    //{
-    //    if (_infos == null)
-    //    {
-    //        _infos = GetComponentInParent<FileManager>().GetRootDirectory();
-    //    }
-    //    var directories = _infos.GetDirectories();
-    //    foreach (var directory in directories)
-    //    {
-    //        if (directory.Name.Equals(dName))
-    //        {
-    //            return directory;
-    //        }
-    //    }
-    //    return null;
-    //}
-
-    private DirectoryInfo GetDirectory()
-    {
-        return _infos;
+        private DirectoryInfo GetDirectory()
+        {
+            return _infos;
+        }
     }
 }

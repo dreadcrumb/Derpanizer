@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace FileManagerScripts
@@ -44,9 +47,14 @@ namespace FileManagerScripts
 
         }
 
-        public DirectoryInfo[] GetAllDirectories()
+        public List<DirectoryInfo> GetAllDirectories()
         {
-            return DirectoryInfo.GetDirectories();
+            List<DirectoryInfo> list = DirectoryInfo.GetDirectories().ToList();
+            foreach (var dir in DirectoryInfo.GetDirectories())
+            {
+                list.AddRange(dir.GetDirectories().ToList());
+            }
+            return list;
         }
 
         public DirectoryInfo GetRootDirectory()
