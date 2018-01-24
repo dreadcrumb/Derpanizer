@@ -14,7 +14,23 @@ namespace UnityStandardAssets.Utility
         const bool k_AttachToCenterOfMass = false;
 
         private SpringJoint m_SpringJoint;
+        private bool isDragging;
 
+        void OnMouseOver()
+        {
+            if (!isDragging && gameObject.CompareTag("file"))
+            {
+                gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Outlined/Silhouetted Diffuse");
+            }
+        }
+
+        void OnMouseExit()
+        {
+            if (!isDragging && gameObject.CompareTag("file"))
+            {
+                gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
+            }
+        }
 
         private void Update()
         {
@@ -64,6 +80,11 @@ namespace UnityStandardAssets.Utility
 
         private IEnumerator DragObject(float distance)
         {
+            isDragging = true;
+
+            // set outline while dragged
+            m_SpringJoint.connectedBody.GetComponent<Renderer>().material.shader = Shader.Find("Outlined/Silhouetted Diffuse");
+
             var oldDrag = m_SpringJoint.connectedBody.drag;
             var oldAngularDrag = m_SpringJoint.connectedBody.angularDrag;
             m_SpringJoint.connectedBody.drag = k_Drag;
@@ -79,8 +100,10 @@ namespace UnityStandardAssets.Utility
             {
                 m_SpringJoint.connectedBody.drag = oldDrag;
                 m_SpringJoint.connectedBody.angularDrag = oldAngularDrag;
+                m_SpringJoint.connectedBody.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
                 m_SpringJoint.connectedBody = null;
             }
+            isDragging = false;
         }
 
 

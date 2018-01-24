@@ -10,6 +10,7 @@ namespace FileManagerScripts
         public void Init(FileInfo fileInfo)
         {
             Info = fileInfo;
+            gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
         }
 
         //void OnCollisionStay(Collision collision)
