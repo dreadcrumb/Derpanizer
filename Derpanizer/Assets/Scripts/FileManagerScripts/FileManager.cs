@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
@@ -24,14 +25,14 @@ namespace FileManagerScripts
 
         private void SetDefaultLocation()
         {
-            var table = GameObject.Find("table");
+            var table = GameObject.Find(Const.Const.DEFAULT_TABLE);
             _defaultLocation = table.transform.position;
             _defaultLocation.y += table.GetComponent<Renderer>().bounds.size.y + 0.01f;
         }
 
         private void InitContainers()
         {
-            GameObject[] containers = GameObject.FindGameObjectsWithTag("container");
+            GameObject[] containers = GameObject.FindGameObjectsWithTag(Const.Const.CONTAINER);
             foreach (var container in containers)
             {
                 DirectoryInfo dir = DirectoryExists(container.name);
@@ -43,7 +44,7 @@ namespace FileManagerScripts
                 {
                     //find right place in tree and create folder
                     string parentFolder;
-                    //var parentFolder = container.transform.parent.name;
+
                     if ((parentFolder = container.transform.parent.name).Equals(_rootPath))
                     {
                         parentFolder = container.transform.name;
@@ -52,9 +53,9 @@ namespace FileManagerScripts
                     if (parentDir == null)
                     {
                         DirectoryInfo rootdir = _reader.GetRootDirectory();
-                        rootdir.CreateSubdirectory(rootdir.FullName + Const.Const.SLASH + parentFolder);
+                        rootdir.CreateSubdirectory(rootdir.FullName + Const.Const.BACKSLASH + parentFolder);
                     }
-                    dir = parentDir.CreateSubdirectory(parentDir.FullName + Const.Const.SLASH + container.name);
+                    dir = parentDir.CreateSubdirectory(parentDir.FullName + Const.Const.BACKSLASH + container.name);
                     container.GetComponent<MoveScript>().Init(dir);
                 }
                 var filesinDirectory = dir.GetFiles();
@@ -76,19 +77,6 @@ namespace FileManagerScripts
             }
             return null;
         }
-
-        //public void ReadFirstLayer()
-        //{
-        //    foreach (var directory in _directories)
-        //    {
-        //        var files = directory.GetFiles();
-        //        if (files.Length > 0)
-        //        {
-        //            InstantiateFiles(files);
-        //        }
-
-        //    }
-        //}
 
         private void InstantiateFiles(IEnumerable<FileInfo> infos, GameObject container)
         {
@@ -123,21 +111,37 @@ namespace FileManagerScripts
         {
             //location.x += xAxis;
             //location.z += zAxis;
+            GameObject obj;
             switch (fileInfo.Extension)
             {
-                //case ".txt":
-                default:
-                    var obj = Instantiate(
-                        (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/File.prefab", typeof(GameObject)), location, new Quaternion());
-                    obj.AddComponent<FileObject>();
-                    obj.GetComponent<FileObject>().Init(fileInfo);
+                case ".txt":
+                case ".doc":
+                case "pdf":
+                case "docx":
+                case "rtf":
+                    obj = Instantiate(
+                        (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Textdocument.prefab", typeof(GameObject)), location, new Quaternion());
                     break;
+                default:
+                    obj = Instantiate(
+                        (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/File.prefab", typeof(GameObject)), location, new Quaternion());
+                    break;
+
             }
+            obj.AddComponent<FileObject>();
+            obj.GetComponent<FileObject>().Init(fileInfo);
+          
+            // Set HoverText
+            GameObject hover = Instantiate(
+                (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/HoverT.prefab", typeof(GameObject)),
+                obj.transform.position, new Quaternion());
+            hover.GetComponent<HoverText>().SetTarget(obj.transform);
+            hover.GetComponent<HoverText>().GetComponent<GUIText>().text = fileInfo.Name.Split(Const.Const.BACKSLASH.ToCharArray()).Last();
         }
 
         private GameObject GetContainer(string dirName)
         {
-            GameObject[] containers = GameObject.FindGameObjectsWithTag("container");
+            GameObject[] containers = GameObject.FindGameObjectsWithTag(Const.Const.CONTAINER);
             foreach (var container in containers)
             {
                 if (container.name.Equals(dirName))
@@ -146,12 +150,6 @@ namespace FileManagerScripts
                 }
             }
             return null;
-        }
-
-        public void CopyFile(FileObject fileToCopy)
-        {
-            // Note: Not sure where to put the copied file, maybe put a printer on the desk?
-            Instantiate(fileToCopy, _defaultLocation, new Quaternion());
         }
     }
 }

@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
         string text = "D:/Leander/FH_Hagenberg_IM/MA_3D/Derpanizer/Test";
         gameObject.AddComponent<FileManager>();
         gameObject.GetComponent<FileManager>().Init(/*inputField.*/text);
-        //gameObject.GetComponent<FileManager>().ReadFirstLayer();
         gameObject.AddComponent<CopyScript>();
 
         var menuItems = GameObject.FindGameObjectsWithTag("menu");
@@ -43,6 +42,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

@@ -17,7 +17,7 @@ namespace FileManagerScripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("file"))
+            if (other.gameObject.CompareTag(Const.Const.FILE))
             {
                 var fileInfo = other.gameObject.GetComponent<FileObject>();
                 if (fileInfo != null)
@@ -29,12 +29,12 @@ namespace FileManagerScripts
                         AssetDatabase.CreateFolder(root.Name, fileInfo.name);
                     }
                     var source = fileInfo.Info.ToString();
-                    var destination = folder + Const.Const.SLASH + fileInfo.Info.Name;
+                    var destination = folder + Const.Const.BACKSLASH + fileInfo.Info.Name;
 
                     if (!source.Equals(destination))
                     {
                         FileUtil.MoveFileOrDirectory(source, destination);
-                        FileInfo info = new FileInfo(folder.ToString() + Const.Const.SLASH + fileInfo.Info.Name);
+                        FileInfo info = new FileInfo(folder.ToString() + Const.Const.BACKSLASH + fileInfo.Info.Name);
                         fileInfo.Info = info;
                     }
                 }

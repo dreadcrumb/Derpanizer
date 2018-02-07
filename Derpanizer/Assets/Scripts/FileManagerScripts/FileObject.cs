@@ -5,12 +5,13 @@ namespace FileManagerScripts
 {
     public class FileObject : MonoBehaviour
     {
-        public FileInfo Info;
+        public FileInfo Info
+        { get; set; }
 
         public void Init(FileInfo fileInfo)
         {
             Info = fileInfo;
-            gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
+            //gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
         }
 
         //void OnCollisionStay(Collision collision)

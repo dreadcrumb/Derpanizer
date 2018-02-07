@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
@@ -63,7 +62,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void StartGame()
         {
             SetGameRunning(true);
-            m_MouseLook.Init(transform, m_Camera.transform);
 
         }
 

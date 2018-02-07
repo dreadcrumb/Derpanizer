@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23542773710987112}
   - component: {fileID: 54528978527500450}
   - component: {fileID: 114012337317771928}
+  - component: {fileID: 114539921059361854}
   m_Layer: 0
   m_Name: File
   m_TagString: file
@@ -59,7 +60,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: a3b1457832d76654eae613a68fbc8aef, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,3 +124,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58650e15a2607e44daa0f150e0061d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114539921059361854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1724274647569942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768c342736e44b6a40f12060ffc1c08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  clampToScreen: 0
+  clampBorderSize: 0.05
+  useMainCamera: 1
+  cameraToUse: {fileID: 0}
