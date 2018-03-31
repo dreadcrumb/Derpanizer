@@ -9,6 +9,9 @@ TagManager:
   - container
   - file
   - door
+  - fileManager
+  - saveManager
+  - gameManager
   layers:
   - Default
   - TransparentFX

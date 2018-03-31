@@ -1,47 +1,98 @@
-﻿
-using FileManagerScripts;
+﻿using Assets.Scripts.FileManagerScripts;
+using Assets.Scripts.SaveManager;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
 
-public class GameManager : MonoBehaviour
+namespace Assets.Scripts.GameManagerScript
 {
-    private Camera _camera;
+	public class GameManager : MonoBehaviour
+	{
+		public static GameManager Manager;
+		private FileManager _mFileManager;
+		private SaveAndLoadScript _mSaveScript;
+		private SaveClass _loadFile;
 
+		private string _mPath;
 
-    // Use this for initialization
-    void Start()
-    {
-        _camera = Camera.main;
-        InitGame();
-    }
+		private void Awake()
+		{
+			if (Manager == null)
+			{
+				DontDestroyOnLoad(gameObject);
+				Manager = this;
+			}
+			else if (Manager != this)
+			{
+				CopyManager(Manager);
+				Destroy(Manager);
+				InitFileManager();
+			}
+		}
 
-    public void InitGame()
-    {
-        //InputField inputField = GameObject.Find("FilePathInput").GetComponent<InputField>();
-        //if (inputField != null)
-        //{
-        string text = "D:/Leander/FH_Hagenberg_IM/MA_3D/Derpanizer/Test";
-        gameObject.AddComponent<FileManager>();
-        gameObject.GetComponent<FileManager>().Init(/*inputField.*/text);
-        gameObject.AddComponent<CopyScript>();
+		private void CopyManager(GameManager mngr)
+		{
+			_mFileManager = mngr._mFileManager;
+			_mSaveScript = mngr._mSaveScript;
+			_mPath = mngr._mPath;
+			_loadFile = mngr._loadFile;
+		}
 
-        var menuItems = GameObject.FindGameObjectsWithTag("menu");
-        foreach (var item in menuItems)
-        {
-            item.SetActive(false);
-        }
-        // make camera movement possible
-        gameObject.AddComponent<FirstPersonController>();
-        gameObject.GetComponent<FirstPersonController>().StartGame();
-        //}
-        //else
-        //{
-        // TODO: error handling
-        //}
-    }
+		private void Start()
+		{
+			_mSaveScript = gameObject.AddComponent<SaveAndLoadScript>();
+		}
 
-    void Update()
-    {
+		private void Update()
+		{
+			if (Input.GetKeyDown("o") && gameObject.GetComponent<FileManager>() != null)
+			{
+				gameObject.GetComponent<FileManager>().UpdateFileLocations();
+				gameObject.GetComponent<SaveAndLoadScript>().Save();
+			}
+		}
 
-    }
+		public FileManager GetFileManager()
+		{
+			return gameObject.GetComponent<FileManager>();
+		}
+
+		public void SetPath(string path)
+		{
+			_mPath = path;
+		}
+
+		public string GetPath()
+		{
+			return _mPath;
+		}
+
+		public void LoadGame()
+		{
+			var sgs = new StartGameScript();
+			_loadFile = _mSaveScript.Load();
+			sgs.LoadNewScene();
+		}
+
+		public void StartGame()
+		{
+			var sgs = new StartGameScript();
+			SetPath(sgs.InitRootPath());
+			sgs.LoadNewScene();
+		}
+
+		private void InitFileManager()
+		{
+			_mFileManager = gameObject.AddComponent<FileManager>();
+
+			if (_loadFile == null)
+			{
+			_mFileManager.InitFromScratch(_mPath);
+			}
+			else
+			{
+			_mFileManager.InitFromLoadFile(_loadFile);
+			}
+
+		}
+
+	}
 }

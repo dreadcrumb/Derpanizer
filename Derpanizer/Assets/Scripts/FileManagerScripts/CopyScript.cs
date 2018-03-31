@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace FileManagerScripts
+namespace Assets.Scripts.FileManagerScripts
 {
     public class CopyScript : MonoBehaviour
     {
@@ -12,11 +12,11 @@ namespace FileManagerScripts
             {
                 // copy file in file system
                 var fileToCopy = other.gameObject.GetComponent<FileObject>();
-                string extension = fileToCopy.Info.Extension;
-                string filename = fileToCopy.Info.ToString().TrimEnd(extension.ToCharArray());
-                string[] pathParts = filename.Split(Const.Const.BACKSLASH.ToCharArray());
+                var extension = fileToCopy.Info.Extension;
+                var filename = fileToCopy.Info.ToString().TrimEnd(extension.ToCharArray());
+                var pathParts = filename.Split(Const.Const.BACKSLASH.ToCharArray());
 
-                string numberAtEnd = "0";
+                var numberAtEnd = "0";
                 if (pathParts.Last().Contains(Const.Const.COPY))
                 {
                     numberAtEnd = GetNumbers(pathParts.Last());
@@ -25,13 +25,13 @@ namespace FileManagerScripts
 
                 if (!numberAtEnd.Equals("0"))
                 {
-                    string copyname = filename + Const.Const.COPY + (int.Parse(numberAtEnd) + 1) +
+                    var copyname = filename + Const.Const.COPY + (int.Parse(numberAtEnd) + 1) +
                                       extension;
                     FileUtil.CopyFileOrDirectory(fileToCopy.Info.ToString(), copyname);
                 }
                 else
                 {
-                    string copyname = filename + Const.Const.COPY + 1 + extension;
+                    var copyname = filename + Const.Const.COPY + 1 + extension;
                     FileUtil.CopyFileOrDirectory(fileToCopy.Info.ToString(), copyname);
                 }
 

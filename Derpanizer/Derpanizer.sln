@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer", "Derpanizer.csproj", "{BFBBA1BB-6F8C-6F6B-423F-11C609F82F08}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer.Plugins", "Derpanizer.Plugins.csproj", "{9DE75934-C9CD-5C97-3551-64C76B68A66C}"

@@ -1,155 +1,201 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Assets.Scripts.GameManagerScript;
+using Assets.Scripts.SaveManager;
+using FileManagerScripts;
 using UnityEditor;
 using UnityEngine;
 
-namespace FileManagerScripts
+namespace Assets.Scripts.FileManagerScripts
 {
-    public class FileManager : MonoBehaviour
-    {
-        private FileReader _reader;
-        private Vector3 _defaultLocation;
-        private List<DirectoryInfo> _directories;
-        private string _rootPath;
+	[Serializable]
+	public class FileManager : MonoBehaviour
+	{
+		public static FileManager Manager;
+		public List<StuffToSaveClass> FileList;
+		public string RootPath;
 
-        public void Init(string path)
-        {
-            _rootPath = path;
-            _reader = new FileReader(path);
-            SetDefaultLocation();
-            _directories = _reader.GetAllDirectories();
-            InitContainers();
-        }
+		private const float InitMargin = 0.01f;
 
-        private void SetDefaultLocation()
-        {
-            var table = GameObject.Find(Const.Const.DEFAULT_TABLE);
-            _defaultLocation = table.transform.position;
-            _defaultLocation.y += table.GetComponent<Renderer>().bounds.size.y + 0.01f;
-        }
+		private FileReader _reader;
+		private Vector3 _defaultLocation;
+		private List<DirectoryInfo> _directories;
+		private bool _loaded = false;
 
-        private void InitContainers()
-        {
-            GameObject[] containers = GameObject.FindGameObjectsWithTag(Const.Const.CONTAINER);
-            foreach (var container in containers)
-            {
-                DirectoryInfo dir = DirectoryExists(container.name);
-                if (dir != null)
-                {
-                    container.GetComponent<MoveScript>().Init(dir);
-                }
-                else
-                {
-                    //find right place in tree and create folder
-                    string parentFolder;
+		public void CommonInit()
+		{
+			_reader = new FileReader(RootPath);
+			_defaultLocation = SetDefaultLocation();
+			_directories = _reader.GetAllDirectories();
 
-                    if ((parentFolder = container.transform.parent.name).Equals(_rootPath))
-                    {
-                        parentFolder = container.transform.name;
-                    }
-                    DirectoryInfo parentDir = DirectoryExists(parentFolder);
-                    if (parentDir == null)
-                    {
-                        DirectoryInfo rootdir = _reader.GetRootDirectory();
-                        rootdir.CreateSubdirectory(rootdir.FullName + Const.Const.BACKSLASH + parentFolder);
-                    }
-                    dir = parentDir.CreateSubdirectory(parentDir.FullName + Const.Const.BACKSLASH + container.name);
-                    container.GetComponent<MoveScript>().Init(dir);
-                }
-                var filesinDirectory = dir.GetFiles();
-                if (filesinDirectory.Length > 0)
-                {
-                    InstantiateFiles(filesinDirectory, container);
-                }
-            }
-        }
+			InitContainers();
+			InitFiles();
+		}
 
-        private DirectoryInfo DirectoryExists(string containerName)
-        {
-            foreach (var directory in _directories)
-            {
-                if (directory.Name.Equals(containerName))
-                {
-                    return directory;
-                }
-            }
-            return null;
-        }
+		public void InitFromLoadFile(SaveClass loadFile)
+		{
+			_loaded = true;
+			RootPath = loadFile.Path;
+			FileList = loadFile.FileList;
+			CommonInit();
+		}
 
-        private void InstantiateFiles(IEnumerable<FileInfo> infos, GameObject container)
-        {
-            Vector3 location;
-            if (container != null)
-            {
-                location = container.transform.position;
-            }
-            else
-            {
-                location = _defaultLocation;
-            }
-            float xAxis = 0;
-            float zAxis = 0;
-            foreach (var file in infos)
-            {
-                if (xAxis < 5)
-                {
-                    xAxis += 1;
-                }
-                else
-                {
-                    zAxis += 1;
-                    xAxis = 0;
-                }
-                InstantiateFile(file, location, xAxis, zAxis);
-                Thread.Sleep(100);
-            }
-        }
+		public void InitFromScratch(string path)
+		{
+			_loaded = false;
+			RootPath = path;
+			FileList = new List<StuffToSaveClass>();
+			CommonInit();
+		}
 
-        private void InstantiateFile(FileInfo fileInfo, Vector3 location, float xAxis, float zAxis)
-        {
-            //location.x += xAxis;
-            //location.z += zAxis;
-            GameObject obj;
-            switch (fileInfo.Extension)
-            {
-                case ".txt":
-                case ".doc":
-                case "pdf":
-                case "docx":
-                case "rtf":
-                    obj = Instantiate(
-                        (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Textdocument.prefab", typeof(GameObject)), location, new Quaternion());
-                    break;
-                default:
-                    obj = Instantiate(
-                        (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/File.prefab", typeof(GameObject)), location, new Quaternion());
-                    break;
+		private static Vector3 SetDefaultLocation()
+		{
+			var table = GameObject.Find(Const.Const.DEFAULT_TABLE);
+			if (table != null)
+			{
+				var loc = table.transform.position;
+				loc.y += table.GetComponent<Renderer>().bounds.size.y + InitMargin;
+				return loc;
+			}
+			return new Vector3();
+		}
 
-            }
-            obj.AddComponent<FileObject>();
-            obj.GetComponent<FileObject>().Init(fileInfo);
-          
-            // Set HoverText
-            GameObject hover = Instantiate(
-                (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/HoverT.prefab", typeof(GameObject)),
-                obj.transform.position, new Quaternion());
-            hover.GetComponent<HoverText>().SetTarget(obj.transform);
-            hover.GetComponent<HoverText>().GetComponent<GUIText>().text = fileInfo.Name.Split(Const.Const.BACKSLASH.ToCharArray()).Last();
-        }
+		private void InitContainers()
+		{
+			var containers = GameObject.FindGameObjectsWithTag(Const.Const.CONTAINER);
 
-        private GameObject GetContainer(string dirName)
-        {
-            GameObject[] containers = GameObject.FindGameObjectsWithTag(Const.Const.CONTAINER);
-            foreach (var container in containers)
-            {
-                if (container.name.Equals(dirName))
-                {
-                    return container;
-                }
-            }
-            return null;
-        }
-    }
+			foreach (var container in containers)
+			{
+				var dir = DirectoryExists(container.name);
+				if (dir != null)
+				{
+					container.GetComponent<MoveScript>().Init(dir);
+				}
+				else
+				{
+					//find right place in tree and create folder
+					string parentFolder;
+
+					if ((parentFolder = container.transform.parent.name).Equals(RootPath))
+					{
+						parentFolder = container.transform.name;
+					}
+					var parentDir = DirectoryExists(parentFolder);
+					if (parentDir == null)
+					{
+						var rootdir = _reader.GetRootDirectory();
+						rootdir.CreateSubdirectory(rootdir.FullName + Const.Const.BACKSLASH + parentFolder);
+					}
+					dir = parentDir.CreateSubdirectory(parentDir.FullName + Const.Const.BACKSLASH + container.name);
+					container.GetComponent<MoveScript>().Init(dir);
+				}
+
+				if (!_loaded)
+				{
+					var filesinDirectory = dir.GetFiles();
+					if (filesinDirectory.Length > 0)
+					{
+						AddFilesToList(filesinDirectory, container);
+					}
+				}
+			}
+		}
+
+		private void InitFiles()
+		{
+			foreach (var file in FileList)
+			{
+				InstantiateFile(file);
+			}
+		}
+
+		private DirectoryInfo DirectoryExists(string containerName)
+		{
+			foreach (var directory in _directories)
+			{
+				if (directory.Name.Equals(containerName))
+				{
+					return directory;
+				}
+			}
+			return null;
+		}
+
+
+		private void AddFilesToList(IEnumerable<FileInfo> infos, GameObject container)
+		{
+			foreach (var file in infos)
+			{
+				FileList.Add(ConvertToSerializable(file, container));
+			}
+		}
+
+		private static void InstantiateFile(StuffToSaveClass file)
+		{
+			GameObject obj;
+			switch (file.Info.Extension)
+			{
+				case ".txt":
+				case ".doc":
+				case "pdf":
+				case "docx":
+				case "rtf":
+					obj = Instantiate(
+							(GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Textdocument.prefab", typeof(GameObject)), file.Location.ToVector3(), file.Rotation.ToQuaternion());
+					break;
+				default:
+					obj = Instantiate(
+							(GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/File.prefab", typeof(GameObject)), file.Location.ToVector3(), file.Rotation.ToQuaternion());
+					break;
+
+			}
+
+			obj.AddComponent<FileObject>();
+			obj.GetComponent<FileObject>().Init(file.Info);
+
+			file.Obj = obj;
+
+			// Set HoverText
+			var hover = Instantiate(
+					(GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/HoverT.prefab", typeof(GameObject)),
+					obj.transform.position, file.Rotation.ToQuaternion());
+			hover.GetComponent<HoverText>().SetTarget(obj.transform);
+			hover.GetComponent<HoverText>().GetComponent<GUIText>().text = file.Info.Name.Split(Const.Const.BACKSLASH.ToCharArray()).Last();
+		}
+
+		private GameObject GetContainer(string dirName)
+		{
+			var containers = GameObject.FindGameObjectsWithTag(Const.Const.CONTAINER);
+			foreach (var container in containers)
+			{
+				if (container.name.Equals(dirName))
+				{
+					return container;
+				}
+			}
+			return null;
+		}
+
+		private static StuffToSaveClass ConvertToSerializable(FileInfo info, GameObject obj)
+		{
+			var pos = obj.transform.position;
+			var position = new SerializableVector3(pos.x, pos.y, pos.z);
+			var rot = obj.transform.rotation;
+			var rotation = new SerializableQuaternion(rot.x, rot.y, rot.z, rot.w);
+			return new StuffToSaveClass(position, rotation, info);
+		}
+
+		public void UpdateFileLocations()
+		{
+			var tempList = new List<StuffToSaveClass>();
+			foreach (var file in FileList)
+			{
+				tempList.Add(ConvertToSerializable(file.Info, file.Obj));
+			}
+			FileList = tempList;
+		}
+	}
 }
