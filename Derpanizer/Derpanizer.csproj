@@ -325,11 +325,11 @@
     <Compile Include="Assets\Scripts\PlayerMovement\MouseLook.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement\OpenDoor.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement\RigidbodyFirstPersonController.cs" />
+    <Compile Include="Assets\Scripts\SaveManager\SaveAndLoadScript.cs" />
+    <Compile Include="Assets\Scripts\SaveManager\SaveClass.cs" />
     <Compile Include="Assets\Scripts\SaveManager\SerializableQuaternion.cs" />
     <Compile Include="Assets\Scripts\SaveManager\SerializableVector3.cs" />
     <Compile Include="Assets\Scripts\SaveManager\StuffToSaveClass.cs" />
-    <Compile Include="Assets\Scripts\SaveManager\SaveAndLoadScript.cs" />
-    <Compile Include="Assets\Scripts\SaveManager\SaveClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />

@@ -11,7 +11,7 @@ namespace Assets.Scripts.SaveManager
 		[SerializeField] public SerializableQuaternion Rotation;
 		[SerializeField] public FileInfo Info;
 
-		public GameObject Obj;
+		//public GameObject Obj;
 
 		public StuffToSaveClass(SerializableVector3 loc, SerializableQuaternion quat, FileInfo inf)
 		{
@@ -20,6 +20,4 @@ namespace Assets.Scripts.SaveManager
 			Info = inf;
 		}
 	}
-
-
 }

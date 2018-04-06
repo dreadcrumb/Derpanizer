@@ -24,12 +24,14 @@ namespace Assets.Scripts.FileManagerScripts
 		private Vector3 _defaultLocation;
 		private List<DirectoryInfo> _directories;
 		private bool _loaded = false;
+		private List<GameObject> _objList;
 
 		public void CommonInit()
 		{
 			_reader = new FileReader(RootPath);
 			_defaultLocation = SetDefaultLocation();
 			_directories = _reader.GetAllDirectories();
+			_objList = new List<GameObject>();
 
 			InitContainers();
 			InitFiles();
@@ -133,7 +135,7 @@ namespace Assets.Scripts.FileManagerScripts
 			}
 		}
 
-		private static void InstantiateFile(StuffToSaveClass file)
+		private void InstantiateFile(StuffToSaveClass file)
 		{
 			GameObject obj;
 			switch (file.Info.Extension)
@@ -156,7 +158,8 @@ namespace Assets.Scripts.FileManagerScripts
 			obj.AddComponent<FileObject>();
 			obj.GetComponent<FileObject>().Init(file.Info);
 
-			file.Obj = obj;
+			//file.Obj = obj;
+			_objList.Add(obj);
 
 			// Set HoverText
 			var hover = Instantiate(
@@ -191,11 +194,28 @@ namespace Assets.Scripts.FileManagerScripts
 		public void UpdateFileLocations()
 		{
 			var tempList = new List<StuffToSaveClass>();
-			foreach (var file in FileList)
+			//foreach (var file in FileList)
+			//{
+			//	tempList.Add(ConvertToSerializable(file.Info, file.Obj));
+			//}
+
+			for (int i = 0; i < FileList.Count; i++)
 			{
-				tempList.Add(ConvertToSerializable(file.Info, file.Obj));
+				tempList.Add(ConvertToSerializable(FileList.ElementAt(i).Info, _objList.ElementAt(i)));
 			}
 			FileList = tempList;
+		}
+
+		public void DeleteFile(FileInfo fileInfo)
+		{
+			for (int i = 0; i < FileList.Count; i++)
+			{
+				if (FileList.ElementAt(i).Info.Equals(fileInfo))
+				{
+					FileList.RemoveAt(i);
+					_objList.RemoveAt(i);
+				}
+			}
 		}
 	}
 }
