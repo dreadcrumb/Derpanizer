@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using Assets.Scripts.SaveManager;
 using FileManagerScripts;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.FileManagerScripts
 {
@@ -110,7 +112,10 @@ namespace Assets.Scripts.FileManagerScripts
 		{
 			foreach (var file in FileList)
 			{
-				InstantiateFile(file);
+				if (file.Info.Exists)
+				{
+					InstantiateFile(file);
+				}
 			}
 		}
 
@@ -140,6 +145,11 @@ namespace Assets.Scripts.FileManagerScripts
 			GameObject obj;
 			switch (file.Info.Extension)
 			{
+				case ".png":
+				case ".jpg":
+				case ".jpeg":
+					obj = InstantiateImage(file);
+					break;
 				case ".txt":
 				case ".doc":
 				case "pdf":
@@ -167,6 +177,14 @@ namespace Assets.Scripts.FileManagerScripts
 					obj.transform.position, file.Rotation.ToQuaternion());
 			hover.GetComponent<HoverText>().SetTarget(obj.transform);
 			hover.GetComponent<HoverText>().GetComponent<GUIText>().text = file.Info.Name.Split(Const.Const.BACKSLASH.ToCharArray()).Last();
+		}
+
+		private GameObject InstantiateImage(StuffToSaveClass file)
+		{
+			var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Image.prefab", typeof(GameObject));
+			obj = Instantiate(obj, file.Location.ToVector3(), file.Rotation.ToQuaternion());
+			obj.GetComponent<PictureResizer>().InitImage(file.Info.ToString());
+			return obj;
 		}
 
 		private GameObject GetContainer(string dirName)

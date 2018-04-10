@@ -24,6 +24,11 @@ public class StartGameScript
 		return text;
 	}
 
+	public string InitDebug()
+	{
+		return DEFAULT_LOC;
+	}
+
 	public void LoadNewScene()
 	{
 		SceneManager.LoadSceneAsync(MAIN_SCENE);

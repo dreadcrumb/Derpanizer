@@ -48,6 +48,12 @@ namespace Assets.Scripts.GameManagerScript
 				gameObject.GetComponent<FileManager>().UpdateFileLocations();
 				gameObject.GetComponent<SaveAndLoadScript>().Save();
 			}
+			else if (Input.GetKeyDown("r"))
+			{
+				var sgs = new StartGameScript();
+				SetPath(sgs.InitDebug());
+				sgs.LoadNewScene();
+			}
 		}
 
 		public FileManager GetFileManager()
@@ -85,11 +91,11 @@ namespace Assets.Scripts.GameManagerScript
 
 			if (_loadFile == null)
 			{
-			_mFileManager.InitFromScratch(_mPath);
+				_mFileManager.InitFromScratch(_mPath);
 			}
 			else
 			{
-			_mFileManager.InitFromLoadFile(_loadFile);
+				_mFileManager.InitFromLoadFile(_loadFile);
 			}
 
 		}

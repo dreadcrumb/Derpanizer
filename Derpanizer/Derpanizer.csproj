@@ -298,6 +298,7 @@
     <Compile Include="Assets\Scripts\FileManagerScripts\FileObject.cs" />
     <Compile Include="Assets\Scripts\FileManagerScripts\FileReader.cs" />
     <Compile Include="Assets\Scripts\FileManagerScripts\MoveScript.cs" />
+    <Compile Include="Assets\Scripts\FileManagerScripts\PictureResizer.cs" />
     <Compile Include="Assets\Scripts\GameManagerScript\ActiveStateToggler.cs" />
     <Compile Include="Assets\Scripts\GameManagerScript\ApplicationManager.cs" />
     <Compile Include="Assets\Scripts\GameManagerScript\CameraScript.cs" />
