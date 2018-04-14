@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textField: {fileID: 0}
   textField2: {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &114750465953099810
 MonoBehaviour:
   m_ObjectHideFlags: 1

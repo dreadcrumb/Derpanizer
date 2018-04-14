@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 1854294833}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!65 &75288878
 BoxCollider:
@@ -176,52 +176,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 75288875}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &196854620
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.554
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.747
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305691620762586, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1914943835046024, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-      propertyPath: m_Name
-      value: Image (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 9c307407db39a074cafcc532cc3b64c8, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &257935080
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +333,7 @@ Transform:
   - {fileID: 1988157671}
   - {fileID: 1082755464}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &373116848
 GameObject:
@@ -452,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 745613525}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!65 &482370532
 BoxCollider:
@@ -515,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 745613525}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!65 &581346018
 BoxCollider:
@@ -586,7 +540,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &744709267
 Prefab:
@@ -804,7 +758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 1854294833}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!65 &840944065
 BoxCollider:
@@ -927,10 +881,6 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
   m_PrefabInternal: {fileID: 855440161}
---- !u!1 &855440164 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
-  m_PrefabInternal: {fileID: 855440161}
 --- !u!114 &855440165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,11 +928,6 @@ Camera:
   m_PrefabParentObject: {fileID: 2000000, guid: 5e9e851c0e142814dac026a256ba2ac0,
     type: 2}
   m_PrefabInternal: {fileID: 855440161}
---- !u!1 &923578929 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1555735718561546, guid: 48a8e5e0f4fb3804583982b16e62471b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1176541272}
 --- !u!1 &948579144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,7 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 1854294833}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!54 &1077003902
 Rigidbody:
@@ -1278,7 +1223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 1854294833}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!65 &1132867990
 BoxCollider:
@@ -1604,7 +1549,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4841809958659790, guid: 48a8e5e0f4fb3804583982b16e62471b, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1555735718561546, guid: 48a8e5e0f4fb3804583982b16e62471b, type: 2}
       propertyPath: m_Name
@@ -1685,6 +1630,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1300194631}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1336004866
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.31153914
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.073
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.004689336
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619632802782224, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 096d8afa6f17f064ba3b4ba5c5b4f8c9, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1384934428
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,7 +2008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoorOpenAngle: 90
   DoorCloseAngle: 0
-  DoorClosedX: -180
+  DoorClosedX: 0
   DoorAnimSpeed: 2
   DoorStatus: 0
 --- !u!1001 &1854294829
@@ -2159,7 +2146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoorOpenAngle: 90
   DoorCloseAngle: 0
-  DoorClosedX: -180
+  DoorClosedX: 0
   DoorAnimSpeed: 2
   DoorStatus: 0
 --- !u!65 &1854294835
@@ -2271,7 +2258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 745613525}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!65 &1857608975
 BoxCollider:
@@ -2421,7 +2408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecdba8e7eb3a744cb6b1619d4adec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 1042014967}
+  Parent: {fileID: 0}
   fileManager: {fileID: 0}
 --- !u!54 &1907250006
 Rigidbody:

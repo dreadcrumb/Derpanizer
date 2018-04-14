@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4619632802782224}
+  - component: {fileID: 65920101867824244}
   - component: {fileID: 23862110017612418}
   - component: {fileID: 54055432264741366}
   - component: {fileID: 114849506208840012}
-  - component: {fileID: 65920101867824244}
   m_Layer: 0
   m_Name: Textdocument
   m_TagString: file
@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1010831133321526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.13, y: 1.397, z: -2.099}
+  m_LocalPosition: {x: -0.2244501, y: 1.095, z: -0.056}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4494532093036282}
@@ -176,8 +176,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.075, y: 0.005, z: 0.11}
-  m_Center: {x: 0, y: -0.011, z: -0.06}
+  m_Size: {x: 0.09025955, y: 0.004255295, z: 0.12928638}
+  m_Center: {x: -0.00073663396, y: -0.014022669, z: -0.062749565}
 --- !u!114 &114849506208840012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,3 +189,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58650e15a2607e44daa0f150e0061d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textField: {fileID: 0}
+  textField2: {fileID: 0}
