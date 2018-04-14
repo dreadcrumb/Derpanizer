@@ -11,13 +11,13 @@ public class DragRigidbody : MonoBehaviour
 	const float k_Distance = 0.2f;
 	const bool k_AttachToCenterOfMass = false;
 
-	public GameObject textField;
-	public GameObject textField2;
+	private Transform rotatedPosition;
 
 	private SpringJoint m_SpringJoint;
 	private bool isDragging;
 
-
+	public GameObject textField;
+	public GameObject textField2;
 
 	void Start()
 	{
@@ -102,6 +102,8 @@ public class DragRigidbody : MonoBehaviour
 		m_SpringJoint.maxDistance = k_Distance;
 		m_SpringJoint.connectedBody = hit.rigidbody;
 
+		rotatedPosition = mainCamera.transform;
+
 		StartCoroutine("DragObject", hit.distance);
 	}
 
@@ -131,6 +133,25 @@ public class DragRigidbody : MonoBehaviour
 			m_SpringJoint.connectedBody.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
 			m_SpringJoint.connectedBody = null;
 		}
+
+		gameObject.transform.LookAt(rotatedPosition);
+
+		if (rotatedPosition != null)
+		{
+			if (Input.GetKeyDown("q"))
+			{
+				//gameObject.transform.Rotate(Vector3.up, 10);
+				rotatedPosition.Rotate(Vector3.up, 15);
+			}
+			else if (Input.GetKeyDown("e"))
+			{
+				//gameObject.transform.Rotate(Vector3.up, -10);
+				rotatedPosition.Rotate(Vector3.up, -15);
+			}
+
+			gameObject.transform.LookAt(rotatedPosition);
+		}
+
 		isDragging = false;
 	}
 
