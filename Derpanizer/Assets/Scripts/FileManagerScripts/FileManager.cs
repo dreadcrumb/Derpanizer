@@ -182,7 +182,9 @@ namespace Assets.Scripts.FileManagerScripts
 		private GameObject InstantiateImage(StuffToSaveClass file)
 		{
 			var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Image.prefab", typeof(GameObject));
-			obj = Instantiate(obj, file.Location.ToVector3(), file.Rotation.ToQuaternion());
+			var loc = file.Location.ToVector3();
+			loc.y += 1;
+			obj = Instantiate(obj, loc, file.Rotation.ToQuaternion());
 			obj.GetComponent<PictureResizer>().InitImage(file.Info.ToString());
 			return obj;
 		}

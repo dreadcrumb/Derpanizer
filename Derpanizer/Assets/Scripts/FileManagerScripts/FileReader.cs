@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace FileManagerScripts
 {
-	public class FileReader
+	public class FileReader : MonoBehaviour
 	{
 
 		public string Path;

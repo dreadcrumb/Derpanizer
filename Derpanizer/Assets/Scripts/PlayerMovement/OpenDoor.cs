@@ -4,20 +4,23 @@ using UnityEngine;
 public class OpenDoor : MonoBehaviour
 {
 	public float DoorOpenAngle = 90.0f;
-	public float DoorCloseAngle = 0.0f;
-	public float DoorClosedX = 0.0f;
+	private float _doorClosedX;
+	private float _doorClosedY;
+	private float _doorClosedZ;
 	public float DoorAnimSpeed = 2.0f;
-	private Quaternion _doorOpen = Quaternion.identity;
-	private Quaternion _doorClose = Quaternion.identity;
+	private Quaternion _doorOpen;
+	private Quaternion _doorClose;
 	public bool DoorStatus = false; //false is close, true is open
 	private bool _doorGo = false; //for Coroutine, when start only one
 
 	void Start()
 	{
-		DoorStatus = false; //door is open, maybe change
-												//Initialization your quaternions
-		_doorOpen = Quaternion.Euler(DoorClosedX, 0, DoorOpenAngle);
-		_doorClose = Quaternion.Euler(DoorClosedX, 0, DoorCloseAngle);
+		_doorClosedX = gameObject.transform.rotation.x;
+		_doorClosedY = gameObject.transform.rotation.y;
+		_doorClosedZ = gameObject.transform.rotation.z;
+
+		_doorOpen = Quaternion.Euler(_doorClosedX, _doorClosedY, DoorOpenAngle);
+		_doorClose = Quaternion.Euler(_doorClosedX, _doorClosedY, _doorClosedZ);
 		//Find only one time your player and get him reference
 	}
 

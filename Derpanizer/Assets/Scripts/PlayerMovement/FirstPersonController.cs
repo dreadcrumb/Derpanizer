@@ -39,6 +39,7 @@ public class FirstPersonController : MonoBehaviour
 	private bool m_Jumping;
 	private AudioSource m_AudioSource;
 	private bool _gameRunning;
+	private bool _RotateCamera;
 
 	// Use this for initialization
 	private void Start()
@@ -55,6 +56,7 @@ public class FirstPersonController : MonoBehaviour
 		SetCursorLockState(false);		
 		m_MouseLook.Init(transform, m_Camera.transform);
 		SetCursorLockState(true);
+		_RotateCamera = true;
 		SetGameRunning(true);
 		}
 
@@ -286,10 +288,15 @@ public class FirstPersonController : MonoBehaviour
 
 	private void RotateView()
 	{
-		if (_gameRunning)
+		if (_gameRunning && _RotateCamera)
 		{
 			m_MouseLook.LookRotation(transform, m_Camera.transform);
 		}
+	}
+
+	public void SetMouseRotation(bool rotate)
+	{
+		_RotateCamera = rotate;
 	}
 
 

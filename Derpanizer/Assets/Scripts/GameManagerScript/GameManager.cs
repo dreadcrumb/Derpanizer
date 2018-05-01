@@ -54,6 +54,18 @@ namespace Assets.Scripts.GameManagerScript
 				SetPath(sgs.InitDebug());
 				sgs.LoadNewScene();
 			}
+
+			else if (Input.GetKeyDown(KeyCode.Q))
+			{
+				gameObject.transform.Rotate(Vector3.up, 10 * Time.deltaTime);
+				Debug.Log("Pressed q");
+			}
+			else if (Input.GetKeyDown(KeyCode.E))
+			{
+				//gameObject.transform.Rotate(Vector3.up, -10);
+				
+				Debug.Log("Pressed e");
+			}
 		}
 
 		public FileManager GetFileManager()
