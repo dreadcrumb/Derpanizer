@@ -43,28 +43,20 @@ namespace Assets.Scripts.GameManagerScript
 
 		private void Update()
 		{
-			if (Input.GetKeyDown("o") && gameObject.GetComponent<FileManager>() != null)
+			if (Input.GetKeyDown(KeyCode.O) && gameObject.GetComponent<FileManager>() != null)
 			{
 				gameObject.GetComponent<FileManager>().UpdateFileLocations();
 				gameObject.GetComponent<SaveAndLoadScript>().Save();
 			}
-			else if (Input.GetKeyDown("r"))
+			else if (Input.GetKeyDown(KeyCode.R))
 			{
 				var sgs = new StartGameScript();
 				SetPath(sgs.InitDebug());
 				sgs.LoadNewScene();
 			}
-
-			else if (Input.GetKeyDown(KeyCode.Q))
+			else if (Input.GetKeyDown(KeyCode.B) && gameObject.GetComponent<FileManager>() != null)
 			{
-				gameObject.transform.Rotate(Vector3.up, 10 * Time.deltaTime);
-				Debug.Log("Pressed q");
-			}
-			else if (Input.GetKeyDown(KeyCode.E))
-			{
-				//gameObject.transform.Rotate(Vector3.up, -10);
-				
-				Debug.Log("Pressed e");
+				gameObject.GetComponent<FileManager>().InitNewBox();
 			}
 		}
 

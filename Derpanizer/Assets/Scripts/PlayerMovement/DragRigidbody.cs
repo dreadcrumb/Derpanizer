@@ -8,57 +8,20 @@ public class DragRigidbody : MonoBehaviour
 {
 	const float k_Spring = 1000.0f;
 	const float k_Damper = 5.0f;
-	const float k_Drag = 100.0f;
+	const float k_Drag = 1000.0f;
 	const float k_AngularDrag = 5.0f;
 	const float k_Distance = 0.3f;
 	const bool k_AttachToCenterOfMass = false;
 
 	private Transform rotatedPosition;
-
 	private SpringJoint m_SpringJoint;
-	private bool isDragging;
-
 	private Rigidbody hitRigidbody;
+	private float _distance;
 
-	public GameObject textField;
-	public GameObject textField2;
-
-	//void OnMouseOver()
-	//{
-	//	if (!isDragging && gameObject.CompareTag(Const.Const.FILE))
-	//	{
-	//		//gameObject.GetComponent<Renderer>().material.shader = Shader.Find(Const.Const.SHILOUETTE_SHADER);
-	//		if (textField != null)
-	//		{
-	//			textField.transform.position = gameObject.transform.position;
-	//			textField.GetComponent<Text>().text = "game";
-	//		}
-
-	//		if (textField2 != null)
-	//		{
-	//			textField2.GetComponent<Text>().text = "holo";
-	//		}
-	//	}
-	//}
-
-	//void OnMouseExit()
-	//{
-	//	if (!isDragging && gameObject.CompareTag(Const.Const.FILE))
-	//	{
-	//		//gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
-	//		if (textField != null)
-	//		{
-	//			textField.transform.position = gameObject.transform.position;
-	//			textField.GetComponent<Text>().text = "";
-	//		}
-
-	//		if (textField2 != null)
-	//		{
-	//			textField2.GetComponent<Text>().text = "";
-	//		}
-
-	//	}
-	//}
+	void Start()
+	{
+		FreezeRotation();
+	}
 
 	private void Update()
 	{
@@ -69,24 +32,18 @@ public class DragRigidbody : MonoBehaviour
 				FreezeRotation();
 				if (Input.GetKeyDown(KeyCode.Q))
 				{
-					if (Vector3.Distance(hitRigidbody.position, Camera.main.transform.position) > 0.8)
-					{
-						hitRigidbody.transform.Translate((hitRigidbody.position - Camera.main.transform.position).normalized * Time.deltaTime * 10);
-					}
+					//hitRigidbody.transform.Translate((transform.TransformVector(Camera.main.transform.forward)).normalized);
+					_distance++;
 				}
 				else if (Input.GetKeyDown(KeyCode.E))
 				{
-					if (Vector3.Distance(hitRigidbody.position, Camera.main.transform.position) < 2)
-					{
-						hitRigidbody.transform.Translate((hitRigidbody.position - Camera.main.transform.position).normalized *
-																					 Time.deltaTime * -10);
-					}
+					//hitRigidbody.transform.Translate((transform.TransformVector(Camera.main.transform.forward)).normalized * -1);
+					_distance--;
 				}
 				if (Input.GetMouseButton(1))
 				{
-					//StopCoroutine("DragObject");
 					Camera.main.GetComponentInParent<FirstPersonController>().SetMouseRotation(false);
-					hitRigidbody.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * Time.deltaTime * 30);
+					hitRigidbody.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * Time.deltaTime * 10);
 				}
 				else
 				{
@@ -94,7 +51,6 @@ public class DragRigidbody : MonoBehaviour
 				}
 				return;
 			}
-
 
 			var mainCamera = Camera.main;
 
@@ -117,7 +73,6 @@ public class DragRigidbody : MonoBehaviour
 			hitRigidbody = hit.rigidbody;
 
 			hitRigidbody.transform.parent = mainCamera.transform;
-			//hitRigidbody.useGravity = false;
 
 			if (!m_SpringJoint)
 			{
@@ -140,14 +95,11 @@ public class DragRigidbody : MonoBehaviour
 				rotatedPosition = mainCamera.transform;
 			}
 
-			//rotatedPosition.Rotate(rotatedPosition.right, 90);
-			//gameObject.transform.LookAt(rotatedPosition, rotatedPosition.forward);
-
-			StartCoroutine("DragObject", hit.distance);
+			_distance = hit.distance;
+			StartCoroutine("DragObject");
 		}
 		else
 		{
-			//FreezeRotation();
 			if (hitRigidbody != null)
 			{
 				hitRigidbody.transform.parent = null;
@@ -164,10 +116,8 @@ public class DragRigidbody : MonoBehaviour
 		GetComponent<Rigidbody>().freezeRotation = true;
 	}
 
-	private IEnumerator DragObject(float distance)
+	private IEnumerator DragObject()
 	{
-		isDragging = true;
-
 		// set outline while dragged
 		// m_SpringJoint.connectedBody.GetComponent<Renderer>().material.shader = Shader.Find("Outlined/Silhouetted Diffuse");
 
@@ -179,7 +129,7 @@ public class DragRigidbody : MonoBehaviour
 		while (Input.GetMouseButton(0))
 		{
 			var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-			m_SpringJoint.transform.position = ray.GetPoint(distance);
+			m_SpringJoint.transform.position = ray.GetPoint(_distance);
 			yield return null;
 		}
 		if (m_SpringJoint.connectedBody)
@@ -189,7 +139,5 @@ public class DragRigidbody : MonoBehaviour
 			//m_SpringJoint.connectedBody.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
 			m_SpringJoint.connectedBody = null;
 		}
-
-		isDragging = false;
 	}
 }

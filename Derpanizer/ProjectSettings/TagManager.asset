@@ -12,6 +12,7 @@ TagManager:
   - fileManager
   - saveManager
   - gameManager
+  - box
   layers:
   - Default
   - TransparentFX

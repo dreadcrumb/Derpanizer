@@ -7,10 +7,8 @@ namespace Assets.Scripts.SaveManager
 	[Serializable]
 	public class SaveClass
 	{
-
 		[SerializeField] public List<StuffToSaveClass> FileList;
+		[SerializeField] public List<StuffToSaveClass> BoxList;
 		[SerializeField] public string Path;
-
-		//[SerializeField] public FileManager _fileManager;
 	}
 }

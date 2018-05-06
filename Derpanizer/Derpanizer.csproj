@@ -329,6 +329,7 @@
     <Compile Include="Assets\Scripts\SaveManager\SerializableQuaternion.cs" />
     <Compile Include="Assets\Scripts\SaveManager\SerializableVector3.cs" />
     <Compile Include="Assets\Scripts\SaveManager\StuffToSaveClass.cs" />
+    <Compile Include="Assets\Scripts\Util\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />

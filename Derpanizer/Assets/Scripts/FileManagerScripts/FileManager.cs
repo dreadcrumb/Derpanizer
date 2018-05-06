@@ -27,6 +27,7 @@ namespace Assets.Scripts.FileManagerScripts
 		private List<DirectoryInfo> _directories;
 		private bool _loaded = false;
 		private List<GameObject> _objList;
+		private List<StuffToSaveClass> _boxList;
 
 		public void CommonInit()
 		{
@@ -44,6 +45,7 @@ namespace Assets.Scripts.FileManagerScripts
 			_loaded = true;
 			RootPath = loadFile.Path;
 			FileList = loadFile.FileList;
+			InitBoxes(loadFile.BoxList);
 			CommonInit();
 		}
 
@@ -136,7 +138,7 @@ namespace Assets.Scripts.FileManagerScripts
 		{
 			foreach (var file in infos)
 			{
-				FileList.Add(ConvertToSerializable(file, container));
+				FileList.Add(Util.Util.ConvertToSerializable(file, container));
 			}
 		}
 
@@ -183,10 +185,23 @@ namespace Assets.Scripts.FileManagerScripts
 		{
 			var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Image.prefab", typeof(GameObject));
 			var loc = file.Location.ToVector3();
-			loc.y += 1;
+			if (!_loaded)
+			{
+				loc.y += 1;
+			}
 			obj = Instantiate(obj, loc, file.Rotation.ToQuaternion());
 			obj.GetComponent<PictureResizer>().InitImage(file.Info.ToString());
 			return obj;
+		}
+
+		private void InitBoxes(List<StuffToSaveClass> list)
+		{
+			foreach (var box in list)
+			{
+				var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Box.prefab", typeof(GameObject));
+				var loc = box.Location.ToVector3();
+				obj = Instantiate(obj, loc, box.Rotation.ToQuaternion());
+			}
 		}
 
 		private GameObject GetContainer(string dirName)
@@ -202,14 +217,6 @@ namespace Assets.Scripts.FileManagerScripts
 			return null;
 		}
 
-		private static StuffToSaveClass ConvertToSerializable(FileInfo info, GameObject obj)
-		{
-			var pos = obj.transform.position;
-			var position = new SerializableVector3(pos.x, pos.y, pos.z);
-			var rot = obj.transform.rotation;
-			var rotation = new SerializableQuaternion(rot.x, rot.y, rot.z, rot.w);
-			return new StuffToSaveClass(position, rotation, info);
-		}
 
 		public void UpdateFileLocations()
 		{
@@ -221,7 +228,7 @@ namespace Assets.Scripts.FileManagerScripts
 
 			for (int i = 0; i < FileList.Count; i++)
 			{
-				tempList.Add(ConvertToSerializable(FileList.ElementAt(i).Info, _objList.ElementAt(i)));
+				tempList.Add(Util.Util.ConvertToSerializable(FileList.ElementAt(i).Info, _objList.ElementAt(i)));
 			}
 			FileList = tempList;
 		}
@@ -236,6 +243,16 @@ namespace Assets.Scripts.FileManagerScripts
 					_objList.RemoveAt(i);
 				}
 			}
+		}
+
+		public void InitNewBox()
+		{
+			var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Box.prefab", typeof(GameObject));
+			Debug.Log(obj.gameObject.GetComponent<Rigidbody>().useGravity);
+			obj.gameObject.GetComponent<Rigidbody>().useGravity = true;
+			var loc = Camera.main.ScreenPointToRay(Input.mousePosition).direction.normalized;
+			obj = Instantiate(obj, Camera.main.transform.position + loc + loc, new Quaternion());
+			Debug.Log(obj.gameObject.GetComponent<Rigidbody>().useGravity);
 		}
 	}
 }

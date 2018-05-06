@@ -1,7 +1,10 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using Assets.Scripts.FileManagerScripts;
 using Assets.Scripts.SaveManager;
+using Assets.Scripts.Util;
 using FileManagerScripts;
 using UnityEngine;
 
@@ -15,19 +18,13 @@ public class SaveAndLoadScript : MonoBehaviour
 
 	private static SaveAndLoadScript SAVE_SCRIPT;
 
-	[SerializeField] 
+	[SerializeField]
 	private SaveClass _saveTo;
 
 	// Use this for initialization
 	void Start()
 	{
 		_saveTo = new SaveClass();
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
 	}
 
 	public void Save()
@@ -41,9 +38,25 @@ public class SaveAndLoadScript : MonoBehaviour
 			var f = gameObject.GetComponentInParent<FileManager>();
 			_saveTo.FileList = f.FileList;
 			_saveTo.Path = f.RootPath;
+			_saveTo.BoxList = GetAllBoxes();
 
 			bf.Serialize(file, _saveTo);
 			file.Close();
+		}
+	}
+
+	private List<StuffToSaveClass> GetAllBoxes()
+	{
+		var returnList = new List<StuffToSaveClass>();
+		var allBoxes = GameObject.FindGameObjectsWithTag("box");
+		if (allBoxes != null)
+		{
+			returnList.AddRange(allBoxes.Select(box => Util.ConvertToSerializable(null, box)));
+			return returnList;
+		}
+		else
+		{
+			return null;
 		}
 	}
 
@@ -64,7 +77,7 @@ public class SaveAndLoadScript : MonoBehaviour
 			return null;
 		}
 	}
-	
+
 
 	private void OnDispose()
 	{
