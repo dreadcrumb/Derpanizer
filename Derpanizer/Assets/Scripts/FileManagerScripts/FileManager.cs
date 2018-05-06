@@ -90,12 +90,12 @@ namespace Assets.Scripts.FileManagerScripts
 						parentFolder = container.transform.name;
 					}
 					var parentDir = DirectoryExists(parentFolder);
+					var rootdir = new DirectoryInfo(RootPath);
 					if (parentDir == null)
 					{
-						var rootdir = _reader.GetRootDirectory();
-						rootdir.CreateSubdirectory(rootdir.FullName + Const.Const.BACKSLASH + parentFolder);
+						parentDir = rootdir.CreateSubdirectory(parentFolder);
 					}
-					dir = parentDir.CreateSubdirectory(parentDir.FullName + Const.Const.BACKSLASH + container.name);
+					dir = parentDir.CreateSubdirectory(container.name);
 					container.GetComponent<MoveScript>().Init(dir);
 				}
 
