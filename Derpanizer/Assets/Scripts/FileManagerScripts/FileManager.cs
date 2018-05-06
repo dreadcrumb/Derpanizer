@@ -54,6 +54,7 @@ namespace Assets.Scripts.FileManagerScripts
 			_loaded = false;
 			RootPath = path;
 			FileList = new List<StuffToSaveClass>();
+			_boxList = new List<StuffToSaveClass>();
 			CommonInit();
 		}
 
@@ -177,8 +178,8 @@ namespace Assets.Scripts.FileManagerScripts
 			var hover = Instantiate(
 					(GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/HoverT.prefab", typeof(GameObject)),
 					obj.transform.position, file.Rotation.ToQuaternion());
-			hover.GetComponent<HoverText>().SetTarget(obj.transform);
-			hover.GetComponent<HoverText>().GetComponent<GUIText>().text = file.Info.Name.Split(Const.Const.BACKSLASH.ToCharArray()).Last();
+			//hover.GetComponent<HoverText>().SetTarget(obj.transform);
+			//hover.GetComponent<HoverText>().GetComponent<GUIText>().text = file.Info.Name.Split(Const.Const.BACKSLASH.ToCharArray()).Last();
 		}
 
 		private GameObject InstantiateImage(StuffToSaveClass file)
@@ -221,12 +222,7 @@ namespace Assets.Scripts.FileManagerScripts
 		public void UpdateFileLocations()
 		{
 			var tempList = new List<StuffToSaveClass>();
-			//foreach (var file in FileList)
-			//{
-			//	tempList.Add(ConvertToSerializable(file.Info, file.Obj));
-			//}
-
-			for (int i = 0; i < FileList.Count; i++)
+			for (int i = 0; i < _objList.Count; i++)
 			{
 				tempList.Add(Util.Util.ConvertToSerializable(FileList.ElementAt(i).Info, _objList.ElementAt(i)));
 			}
@@ -248,11 +244,9 @@ namespace Assets.Scripts.FileManagerScripts
 		public void InitNewBox()
 		{
 			var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Box.prefab", typeof(GameObject));
-			Debug.Log(obj.gameObject.GetComponent<Rigidbody>().useGravity);
 			obj.gameObject.GetComponent<Rigidbody>().useGravity = true;
 			var loc = Camera.main.ScreenPointToRay(Input.mousePosition).direction.normalized;
-			obj = Instantiate(obj, Camera.main.transform.position + loc + loc, new Quaternion());
-			Debug.Log(obj.gameObject.GetComponent<Rigidbody>().useGravity);
+			obj = Instantiate(obj, Camera.main.transform.position + loc + loc, new Quaternion(90, 0, 0, 0));
 		}
 	}
 }

@@ -13,14 +13,13 @@ public class DragRigidbody : MonoBehaviour
 	const float k_Distance = 0.3f;
 	const bool k_AttachToCenterOfMass = false;
 
-	private Transform rotatedPosition;
 	private SpringJoint m_SpringJoint;
 	private Rigidbody hitRigidbody;
 	private float _distance;
 
-	void Start()
+	void OnMouseOver()
 	{
-		FreezeRotation();
+		Debug.Log(transform.parent);
 	}
 
 	private void Update()
@@ -32,12 +31,10 @@ public class DragRigidbody : MonoBehaviour
 				FreezeRotation();
 				if (Input.GetKeyDown(KeyCode.Q))
 				{
-					//hitRigidbody.transform.Translate((transform.TransformVector(Camera.main.transform.forward)).normalized);
 					_distance++;
 				}
 				else if (Input.GetKeyDown(KeyCode.E))
 				{
-					//hitRigidbody.transform.Translate((transform.TransformVector(Camera.main.transform.forward)).normalized * -1);
 					_distance--;
 				}
 				if (Input.GetMouseButton(1))
@@ -72,7 +69,7 @@ public class DragRigidbody : MonoBehaviour
 
 			hitRigidbody = hit.rigidbody;
 
-			hitRigidbody.transform.parent = mainCamera.transform;
+			//hitRigidbody.transform.parent = mainCamera.transform;
 
 			if (!m_SpringJoint)
 			{
@@ -90,11 +87,6 @@ public class DragRigidbody : MonoBehaviour
 			m_SpringJoint.maxDistance = k_Distance;
 			m_SpringJoint.connectedBody = hit.rigidbody;
 
-			if (rotatedPosition == null)
-			{
-				rotatedPosition = mainCamera.transform;
-			}
-
 			_distance = hit.distance;
 			StartCoroutine("DragObject");
 		}
@@ -105,6 +97,7 @@ public class DragRigidbody : MonoBehaviour
 				hitRigidbody.transform.parent = null;
 				hitRigidbody.useGravity = true;
 				hitRigidbody = null;
+				UnFreezeRotation();
 			}
 			Camera.main.GetComponentInParent<FirstPersonController>().SetMouseRotation(true);
 			return;
@@ -114,6 +107,11 @@ public class DragRigidbody : MonoBehaviour
 	private void FreezeRotation()
 	{
 		GetComponent<Rigidbody>().freezeRotation = true;
+	}
+	
+	private void UnFreezeRotation()
+	{
+		GetComponent<Rigidbody>().freezeRotation = false;
 	}
 
 	private IEnumerator DragObject()
