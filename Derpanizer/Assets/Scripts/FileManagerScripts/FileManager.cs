@@ -27,7 +27,7 @@ namespace Assets.Scripts.FileManagerScripts
 		private List<DirectoryInfo> _directories;
 		private bool _loaded = false;
 		private List<GameObject> _objList;
-		private List<StuffToSaveClass> _boxList;
+		//private List<StuffToSaveClass> _boxList;
 
 		public void CommonInit()
 		{
@@ -45,7 +45,7 @@ namespace Assets.Scripts.FileManagerScripts
 			_loaded = true;
 			RootPath = loadFile.Path;
 			FileList = loadFile.FileList;
-			InitBoxes(loadFile.BoxList);
+			//InitBoxes(loadFile.BoxList);
 			CommonInit();
 		}
 
@@ -54,7 +54,7 @@ namespace Assets.Scripts.FileManagerScripts
 			_loaded = false;
 			RootPath = path;
 			FileList = new List<StuffToSaveClass>();
-			_boxList = new List<StuffToSaveClass>();
+			//_boxList = new List<StuffToSaveClass>();
 			CommonInit();
 		}
 
@@ -85,7 +85,7 @@ namespace Assets.Scripts.FileManagerScripts
 				{
 					//find right place in tree and create folder
 					string parentFolder;
-
+					// TODO: Outsource folder creation
 					if ((parentFolder = container.transform.parent.name).Equals(RootPath))
 					{
 						parentFolder = container.transform.name;
@@ -195,15 +195,16 @@ namespace Assets.Scripts.FileManagerScripts
 			return obj;
 		}
 
-		private void InitBoxes(List<StuffToSaveClass> list)
-		{
-			foreach (var box in list)
-			{
-				var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Box.prefab", typeof(GameObject));
-				var loc = box.Location.ToVector3();
-				obj = Instantiate(obj, loc, box.Rotation.ToQuaternion());
-			}
-		}
+		//private void InitBoxes(List<StuffToSaveClass> list)
+		//{
+		//	TODO: fix collider issues with boxes
+		//	foreach (var box in list)
+		//	{
+		//		var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Box.prefab", typeof(GameObject));
+		//		var loc = box.Location.ToVector3();
+		//		obj = Instantiate(obj, loc, box.Rotation.ToQuaternion());
+		//	}
+		//}
 
 		private GameObject GetContainer(string dirName)
 		{
@@ -241,12 +242,12 @@ namespace Assets.Scripts.FileManagerScripts
 			}
 		}
 
-		public void InitNewBox()
-		{
-			var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Box.prefab", typeof(GameObject));
-			obj.gameObject.GetComponent<Rigidbody>().useGravity = true;
-			var loc = Camera.main.ScreenPointToRay(Input.mousePosition).direction.normalized;
-			obj = Instantiate(obj, Camera.main.transform.position + loc + loc, new Quaternion(90, 0, 0, 0));
-		}
+		//public void InitNewBox()
+		//{
+		//	var obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Box.prefab", typeof(GameObject));
+		//	obj.gameObject.GetComponent<Rigidbody>().useGravity = true;
+		//	var loc = Camera.main.ScreenPointToRay(Input.mousePosition).direction.normalized;
+		//	obj = Instantiate(obj, Camera.main.transform.position + loc + loc, new Quaternion(90, 0, 0, 0));
+		//}
 	}
 }

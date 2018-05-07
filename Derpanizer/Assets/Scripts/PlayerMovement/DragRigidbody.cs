@@ -17,11 +17,6 @@ public class DragRigidbody : MonoBehaviour
 	private Rigidbody hitRigidbody;
 	private float _distance;
 
-	void OnMouseOver()
-	{
-		Debug.Log(transform.parent);
-	}
-
 	private void Update()
 	{
 		if (Input.GetMouseButton(0))
@@ -29,6 +24,7 @@ public class DragRigidbody : MonoBehaviour
 			if (hitRigidbody != null)
 			{
 				FreezeRotation();
+				hitRigidbody.useGravity = false;
 				if (Input.GetKeyDown(KeyCode.Q))
 				{
 					_distance++;
@@ -69,26 +65,26 @@ public class DragRigidbody : MonoBehaviour
 
 			hitRigidbody = hit.rigidbody;
 
-			//hitRigidbody.transform.parent = mainCamera.transform;
+			hitRigidbody.transform.parent = mainCamera.transform;
 
-			if (!m_SpringJoint)
-			{
-				var go = new GameObject("Rigidbody dragger");
-				var body = go.AddComponent<Rigidbody>();
-				m_SpringJoint = go.AddComponent<SpringJoint>();
-				body.isKinematic = true;
-			}
+			//if (!m_SpringJoint)
+			//{
+			//	var go = new GameObject("Rigidbody dragger");
+			//	var body = go.AddComponent<Rigidbody>();
+			//	m_SpringJoint = go.AddComponent<SpringJoint>();
+			//	body.isKinematic = true;
+			//}
 
-			m_SpringJoint.transform.position = hit.point;
-			m_SpringJoint.anchor = Vector3.zero;
+			//m_SpringJoint.transform.position = hit.point;
+			//m_SpringJoint.anchor = Vector3.zero;
 
-			m_SpringJoint.spring = k_Spring;
-			m_SpringJoint.damper = k_Damper;
-			m_SpringJoint.maxDistance = k_Distance;
-			m_SpringJoint.connectedBody = hit.rigidbody;
+			//m_SpringJoint.spring = k_Spring;
+			//m_SpringJoint.damper = k_Damper;
+			//m_SpringJoint.maxDistance = k_Distance;
+			//m_SpringJoint.connectedBody = hit.rigidbody;
 
-			_distance = hit.distance;
-			StartCoroutine("DragObject");
+			//_distance = hit.distance;
+			//StartCoroutine("DragObject");
 		}
 		else
 		{
@@ -96,6 +92,7 @@ public class DragRigidbody : MonoBehaviour
 			{
 				hitRigidbody.transform.parent = null;
 				hitRigidbody.useGravity = true;
+				hitRigidbody.isKinematic = false;
 				hitRigidbody = null;
 				UnFreezeRotation();
 			}
@@ -108,10 +105,12 @@ public class DragRigidbody : MonoBehaviour
 	{
 		GetComponent<Rigidbody>().freezeRotation = true;
 	}
-	
+
 	private void UnFreezeRotation()
 	{
 		GetComponent<Rigidbody>().freezeRotation = false;
+		GetComponent<Rigidbody>().isKinematic = false;
+		GetComponent<Rigidbody>().useGravity = true;
 	}
 
 	private IEnumerator DragObject()

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer", "Derpanizer.csproj", "{BFBBA1BB-6F8C-6F6B-423F-11C609F82F08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer", "Assembly-CSharp.csproj", "{877DC315-DAAF-F05C-0248-1F2F1E68DE8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer.Plugins", "Derpanizer.Plugins.csproj", "{9DE75934-C9CD-5C97-3551-64C76B68A66C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer", "Assembly-CSharp-firstpass.csproj", "{4E0D9788-C18B-842B-8EA5-D7143552A9C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer.Editor.Plugins", "Derpanizer.Editor.Plugins.csproj", "{5ABDA5DF-0A9F-E0D6-4D28-7782BA70EC3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derpanizer", "Assembly-CSharp-Editor-firstpass.csproj", "{3DC1689F-EE3D-1E60-077A-2E1CE425BAC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,18 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BFBBA1BB-6F8C-6F6B-423F-11C609F82F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFBBA1BB-6F8C-6F6B-423F-11C609F82F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFBBA1BB-6F8C-6F6B-423F-11C609F82F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFBBA1BB-6F8C-6F6B-423F-11C609F82F08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9DE75934-C9CD-5C97-3551-64C76B68A66C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9DE75934-C9CD-5C97-3551-64C76B68A66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9DE75934-C9CD-5C97-3551-64C76B68A66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9DE75934-C9CD-5C97-3551-64C76B68A66C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5ABDA5DF-0A9F-E0D6-4D28-7782BA70EC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5ABDA5DF-0A9F-E0D6-4D28-7782BA70EC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5ABDA5DF-0A9F-E0D6-4D28-7782BA70EC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5ABDA5DF-0A9F-E0D6-4D28-7782BA70EC3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877DC315-DAAF-F05C-0248-1F2F1E68DE8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877DC315-DAAF-F05C-0248-1F2F1E68DE8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877DC315-DAAF-F05C-0248-1F2F1E68DE8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877DC315-DAAF-F05C-0248-1F2F1E68DE8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E0D9788-C18B-842B-8EA5-D7143552A9C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E0D9788-C18B-842B-8EA5-D7143552A9C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E0D9788-C18B-842B-8EA5-D7143552A9C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E0D9788-C18B-842B-8EA5-D7143552A9C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DC1689F-EE3D-1E60-077A-2E1CE425BAC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DC1689F-EE3D-1E60-077A-2E1CE425BAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DC1689F-EE3D-1E60-077A-2E1CE425BAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DC1689F-EE3D-1E60-077A-2E1CE425BAC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

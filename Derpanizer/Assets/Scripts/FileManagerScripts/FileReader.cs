@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace FileManagerScripts
+namespace Assets.Scripts.FileManagerScripts
 {
 	public class FileReader : MonoBehaviour
 	{

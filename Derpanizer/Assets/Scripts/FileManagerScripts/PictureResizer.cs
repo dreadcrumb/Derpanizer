@@ -22,8 +22,12 @@ namespace Assets.Scripts.FileManagerScripts
 		public void InitImage(string imgPath)
 		{
 			var texture = new Texture2D(10, 10, TextureFormat.RGB565, false);
-			var www = new WWW(imgPath);
+			var www = new WWW("file:///" + imgPath);
 			www.LoadImageIntoTexture(texture);
+			while (!www.isDone)
+			{
+				// wait
+			}
 
 			if (gameObject.GetComponent<Renderer>().material == null)
 			{

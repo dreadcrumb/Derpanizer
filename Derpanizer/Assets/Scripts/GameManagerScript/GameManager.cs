@@ -54,12 +54,12 @@ namespace Assets.Scripts.GameManagerScript
 				SetPath(sgs.InitDebug());
 				sgs.LoadNewScene();
 			}
-			else if (Input.GetKeyDown(KeyCode.B) && gameObject.GetComponent<FileManager>() != null)
-			{
-				gameObject.GetComponent<FileManager>().InitNewBox();
-			}
+			//else if (Input.GetKeyDown(KeyCode.B) && gameObject.GetComponent<FileManager>() != null)
+			//{
+			//	gameObject.GetComponent<FileManager>().InitNewBox();
+			//}
 		}
-
+		
 		public FileManager GetFileManager()
 		{
 			return gameObject.GetComponent<FileManager>();

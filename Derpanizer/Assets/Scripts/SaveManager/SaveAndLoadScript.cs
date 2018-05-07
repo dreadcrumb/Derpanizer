@@ -38,7 +38,7 @@ public class SaveAndLoadScript : MonoBehaviour
 			var f = gameObject.GetComponentInParent<FileManager>();
 			_saveTo.FileList = f.FileList;
 			_saveTo.Path = f.RootPath;
-			_saveTo.BoxList = GetAllBoxes();
+			//_saveTo.BoxList = GetAllBoxes();
 
 			bf.Serialize(file, _saveTo);
 			file.Close();
